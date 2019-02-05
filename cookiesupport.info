@@ -1,0 +1,4 @@
+name = Cookie support
+description = Some additional logic for cross-domain tracking cookies
+version = 1.0.0
+core = 7.x

@@ -1,0 +1,21 @@
+<?php
+
+function cookiesupport_boot(){
+
+    $tc_expiry = 31536000; // 365 days
+
+    if (isset($_SERVER['HTTP_DNT']) && $_SERVER['HTTP_DNT'] == 1) {
+        setcookie('sp_tc', 1, time() + $tc_expiry); // Always assume to disable tracking when DNT is enabled in browser
+    } else {
+        // See if tracking consent is given in url
+        if (isset($_GET['tcc'])) {
+            if (is_numeric($_GET['tcc'])) {
+                setcookie('sp_tc', $_GET['tcc'], time() + $tc_expiry); // 1: disable tracking, 2: enable tracking
+            } else {
+                if ($_GET['tcc'] == 'reset') {
+                    setcookie('sp_tc', 0, time() - 1); //
+                }
+            }
+        }
+    }
+}
